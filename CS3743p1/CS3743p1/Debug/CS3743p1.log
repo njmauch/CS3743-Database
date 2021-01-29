@@ -1,0 +1,6 @@
+﻿  cs3743p1.c
+c:\users\njmau\source\repos\cs3743p1\cs3743p1\cs3743p1.c(56): warning C4101: 'rcFseek': unreferenced local variable
+c:\users\njmau\source\repos\cs3743p1\cs3743p1\cs3743p1.c(95): warning C4101: 'rcFseek': unreferenced local variable
+c:\users\njmau\source\repos\cs3743p1\cs3743p1\cs3743p1.c(208): warning C4101: 'rcFseek': unreferenced local variable
+c:\users\njmau\source\repos\cs3743p1\cs3743p1\cs3743p1.c(260): warning C4101: 'rcFseek': unreferenced local variable
+  CS3743p1.vcxproj -> C:\Users\njmau\source\repos\CS3743p1\Debug\CS3743p1.exe

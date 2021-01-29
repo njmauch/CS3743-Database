@@ -1,0 +1,155 @@
+Begging Customers
+    CustNr Name                           Preferred Airline    Birth Dt   Gender 
+    111    Perry Noid                     Spirit               2000-04-01 M      
+    222    Melba Toast                    American             1990-09-11 F      
+    333    Pete Moss                      Clampett             1992-03-03 M      
+    444    Bill Board                     American             1985-04-04 M      
+    480    Anita Vacay                    Spirit               1975-06-01 F      
+    555    Jerry Tall                     PoDunk               1927-04-15 M      
+    666    Tom E Gunn                     Clampett             1976-06-06 M      
+    777    Bob Wire                       PoDunk               1973-07-07 M      
+    888    Ron DeVoux                     American             1990-08-08 M      
+    890    Ann T Freeze                   ---                  ---        F      
+    901    Peg Board                      Delta                1987-04-04 F      
+    902    Al B Tross                     American             1957-07-12 M      
+    903    B B Gunn                       PoDunk               1976-09-09 F      
+    904    Sally Mander                   Delta                1995-09-04 F      
+    999    Marcus Absent                  Delta                1999-09-09 M      
+    1999   Nathan Mauch                   Alaska Airline       1988-05-11 M      
+Beginning Flights
+    flightId.... flightNm airline............. orig dest schedDt... depTm..... maxSeats numSeatsSold 
+    331          PD001    PoDunk               SAT  MCO  2020-03-03 10:00:00   30       30           
+    341          PD001    PoDunk               SAT  MCO  2020-03-04 10:00:00   54       30           
+    411          AH100    American             HOU  CDG  2020-04-01 08:00:00   130      25           
+    412          AH200    American             HOU  FLL  2020-04-01 06:00:00   130      125          
+    441          SH100    Spirit               IHC  FLL  2020-04-04 07:00:00   130      5            
+    442          SH110    Spirit               IHC  FLL  2020-04-04 15:00:00   130      0            
+    460          SF200    Spirit               FLL  IHC  2020-04-11 12:00:00   130      0            
+    462          SF200    Spirit               FLL  IHC  2020-04-12 12:00:00   130      50           
+    510          AS300    American             SAT  MCO  2020-05-10 10:30:00   130      5            
+    519          F333     PoDunk               SAT  MCO  2020-05-19 16:00:00   30       50           
+    532          PD002    PoDunk               HOU  SEG  2020-05-03 11:00:00   30       5            
+    604          AH200    American             HOU  FLL  2020-06-04 06:00:00   130      30           
+    705          CL123    Clampett             SAT  MCO  2020-07-05 04:00:00   30       0            
+    706          PD002    PoDunk               HOU  SEG  2020-07-06 11:00:00   42       0            
+    707          FXXXX    PoDunk               SAT  HOU  2020-05-03 11:00:00   30       5            
+    15 Rows
+Duplicate key error: Duplicate entry '1999' for key 'PRIMARY'
+Customers after I was added
+    CustNr Name                           Preferred Airline    Birth Dt   Gender 
+    111    Perry Noid                     Spirit               2000-04-01 M      
+    222    Melba Toast                    American             1990-09-11 F      
+    333    Pete Moss                      Clampett             1992-03-03 M      
+    444    Bill Board                     American             1985-04-04 M      
+    480    Anita Vacay                    Spirit               1975-06-01 F      
+    555    Jerry Tall                     PoDunk               1927-04-15 M      
+    666    Tom E Gunn                     Clampett             1976-06-06 M      
+    777    Bob Wire                       PoDunk               1973-07-07 M      
+    888    Ron DeVoux                     American             1990-08-08 M      
+    890    Ann T Freeze                   ---                  ---        F      
+    901    Peg Board                      Delta                1987-04-04 F      
+    902    Al B Tross                     American             1957-07-12 M      
+    903    B B Gunn                       PoDunk               1976-09-09 F      
+    904    Sally Mander                   Delta                1995-09-04 F      
+    999    Marcus Absent                  Delta                1999-09-09 M      
+    1999   Nathan Mauch                   Alaska Airline       1988-05-11 M      
+My Reservation Indexes
+    TABLE_SCHEMA.................... TABLE_NAME...................... INDEX_NAME...................... SEQ_IN_INDEX COLUMN_NAME..................... CARDINALITY. 
+    nja859db                         Reservation                      flightIdx                        1            flightId                         14           
+    nja859db                         Reservation                      flightIdx                        2            custNr                           51           
+    nja859db                         Reservation                      PRIMARY                          1            custNr                           16           
+    nja859db                         Reservation                      PRIMARY                          2            flightId                         51           
+    4 Rows
+My reservations
+    custNr flightId.... reqSeatQty 
+    1999   331          3          
+    1999   510          1          
+    1999   705          2          
+    3 Rows
+Other customers on my flgihts
+    flightId.... custNr reqSeatQty 
+    331          222    12         
+    331          480    2          
+    510          444    5          
+    510          555    20         
+    510          777    1          
+    510          890    2          
+    510          999    15         
+    705          222    2          
+    705          444    2          
+    705          666    3          
+    10 Rows
+Modified Reservations
+    custNr flightId.... reqSeatQty 
+    111    341          10         
+    111    441          2          
+    111    519          2          
+    222    331          12         
+    222    341          11         
+    222    441          2          
+    222    705          2          
+    333    441          2          
+    444    412          5          
+    444    441          2          
+    444    510          5          
+    444    519          5          
+    444    532          2          
+    444    705          2          
+    444    706          2          
+    444    707          2          
+    480    331          2          
+    480    441          2          
+    555    341          3          
+    555    411          30         
+    555    412          20         
+    555    510          20         
+    555    519          1          
+    555    706          2          
+    555    707          8          
+    666    705          3          
+    777    442          1          
+    777    460          1          
+    777    510          1          
+    888    341          1          
+    888    519          1          
+    888    604          1          
+    890    341          1          
+    890    510          2          
+    890    519          1          
+    890    604          1          
+    901    341          20         
+    901    412          8          
+    901    532          1          
+    901    706          4          
+    902    412          5          
+    903    412          3          
+    904    412          2          
+    904    519          5          
+    999    341          14         
+    999    412          10         
+    999    510          15         
+    999    519          14         
+    999    532          1          
+    999    706          5          
+    1999   331          6          
+    1999   510          2          
+    1999   705          4          
+    53 Rows
+Flights Having more than 2 reservations
+    flightId.... COUNT(*).... 
+    331          3            
+    341          7            
+    412          7            
+    441          5            
+    510          6            
+    519          7            
+    532          3            
+    705          4            
+    706          4            
+    9 Rows
+My reservations after deleting
+    custNr flightId.... reqSeatQty 
+    No results
+Other customers on my flgihts
+    flightId.... custNr reqSeatQty 
+    No results

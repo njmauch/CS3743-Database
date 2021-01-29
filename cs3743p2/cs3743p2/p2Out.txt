@@ -1,0 +1,295 @@
+* CS3743 p2Input.txt 
+* Nuke the Hash file if it exists
+ >> NUKE BOOK book.dat
+* Opening of a non-existent file should cause an error
+ >> OPEN BOOK book.data
+    **** ERROR: file not found or invalid header record
+*
+* 1. Create the hash file
+*  
+ >> CREATE BOOK book.dat 19 25 5
+    Record size is 80
+ >> PRINTALL BOOK book.dat
+    MaxPrim=19, RecSize=80, MaxOv=25, MaxProbes=5
+*  
+* 2. Creating it again should cause an existence error
+*  
+ >> CREATE BOOK book.dat 17 30 5
+    Record size is 80
+    **** ERROR: file already exists
+* Open it
+ >> OPEN BOOK book.dat
+*  
+* 3. Insert some books
+*  
+ >> INSERT BOOK JOYPGM001,The Joys of Programming,TECH,PGMING,100
+            Hash RBN is 8, id='JOYPGM001'
+ >> PRINTALL BOOK book.dat
+    MaxPrim=19, RecSize=80, MaxOv=25, MaxProbes=5
+     8 JOYPGM001 TECH        PGMING       100 The Joys of Programming Hash=8
+ >> INSERT BOOK PYTHON001,Learn Python Without Getting Bit,S PRESS,PGMING,200
+            Hash RBN is 1, id='PYTHON001'
+ >> PRINTALL BOOK book.dat
+    MaxPrim=19, RecSize=80, MaxOv=25, MaxProbes=5
+     1 PYTHON001 S PRESS     PGMING       200 Learn Python Without Getting Bit Hash=1
+     8 JOYPGM001 TECH        PGMING       100 The Joys of Programming Hash=8
+ >> INSERT BOOK SQLDBB001,Making Your DB Queries SQueeL,XYZ,DB,300
+            Hash RBN is 16, id='SQLDBB001'
+ >> INSERT BOOK ARTINT001,A.I. Practical Algorithms,S PRESS,PGMING,400
+            Hash RBN is 4, id='ARTINT001'
+ >> PRINTALL BOOK book.dat
+    MaxPrim=19, RecSize=80, MaxOv=25, MaxProbes=5
+     1 PYTHON001 S PRESS     PGMING       200 Learn Python Without Getting Bit Hash=1
+     4 ARTINT001 S PRESS     PGMING       400 A.I. Practical Algorithms Hash=4
+     8 JOYPGM001 TECH        PGMING       100 The Joys of Programming Hash=8
+    16 SQLDBB001 XYZ         DB           300 Making Your DB Queries SQueeL Hash=16
+*  
+* 4. Read an existing book
+*  
+ >> READ BOOK ARTINT001
+            Hash RBN is 4, id='ARTINT001'
+     4 ARTINT001 S PRESS     PGMING       400 A.I. Practical Algorithms Hash=4
+*  
+* 5. Read should not find these two
+*  
+ >> READ BOOK JAVADD001
+            Hash RBN is 2, id='JAVADD001'
+    **** ERROR: record not found
+ >> READ BOOK COBOLL001
+            Hash RBN is 19, id='COBOLL001'
+    **** ERROR: record not found
+*  
+* 6. Insert two more books
+*  
+ >> INSERT BOOK JAVADD001,Java Isn't an Addiction,S PRESS,PGMING,600
+            Hash RBN is 2, id='JAVADD001'
+ >> INSERT BOOK LINUXX004,Learning Linux,XYZ,OS,700
+            Hash RBN is 10, id='LINUXX004'
+ >> PRINTALL BOOK book.dat
+    MaxPrim=19, RecSize=80, MaxOv=25, MaxProbes=5
+     1 PYTHON001 S PRESS     PGMING       200 Learn Python Without Getting Bit Hash=1
+     2 JAVADD001 S PRESS     PGMING       600 Java Isn't an Addiction Hash=2
+     4 ARTINT001 S PRESS     PGMING       400 A.I. Practical Algorithms Hash=4
+     8 JOYPGM001 TECH        PGMING       100 The Joys of Programming Hash=8
+    10 LINUXX004 XYZ         OS           700 Learning Linux Hash=10
+    16 SQLDBB001 XYZ         DB           300 Making Your DB Queries SQueeL Hash=16
+*  
+* 7. Insert an existing book - should cause an error
+*  
+ >> INSERT BOOK ARTINT001,A.I. Practical Algorithms,X PRESS,PGMING,444
+            Hash RBN is 4, id='ARTINT001'
+    **** ERROR: record already exists
+ >> READ BOOK ARTINT001
+            Hash RBN is 4, id='ARTINT001'
+     4 ARTINT001 S PRESS     PGMING       400 A.I. Practical Algorithms Hash=4
+*  
+* 8. Insert more books
+*  
+ >> INSERT BOOK PYTADW001,Programming in Python,ADWES,PGMING,500
+            Hash RBN is 11, id='PYTADW001'
+ >> INSERT BOOK DSTRUC001,Data Structures in C,S PRESS,PGMING,240
+            Hash RBN is 7, id='DSTRUC001'
+*  
+* 9. Insert a book that is a synonym
+*  
+ >> INSERT BOOK EXCELL001,Excel at Excell,MS PRESS,ACCOUNT,200
+            Hash RBN is 2, id='EXCELL001'
+ >> READ BOOK EXCELL001
+            Hash RBN is 2, id='EXCELL001'
+     3 EXCELL001 MS PRESS    ACCOUNT      200 Excel at Excell Hash=2
+ >> READ BOOK JAVADD001
+            Hash RBN is 2, id='JAVADD001'
+     2 JAVADD001 S PRESS     PGMING       600 Java Isn't an Addiction Hash=2
+ >> PRINTALL BOOK book.dat
+    MaxPrim=19, RecSize=80, MaxOv=25, MaxProbes=5
+     1 PYTHON001 S PRESS     PGMING       200 Learn Python Without Getting Bit Hash=1
+     2 JAVADD001 S PRESS     PGMING       600 Java Isn't an Addiction Hash=2
+     3 EXCELL001 MS PRESS    ACCOUNT      200 Excel at Excell Hash=2
+     4 ARTINT001 S PRESS     PGMING       400 A.I. Practical Algorithms Hash=4
+     7 DSTRUC001 S PRESS     PGMING       240 Data Structures in C Hash=7
+     8 JOYPGM001 TECH        PGMING       100 The Joys of Programming Hash=8
+    10 LINUXX004 XYZ         OS           700 Learning Linux Hash=10
+    11 PYTADW001 ADWES       PGMING       500 Programming in Python Hash=11
+    16 SQLDBB001 XYZ         DB           300 Making Your DB Queries SQueeL Hash=16
+*  
+* 10. Insert more books; however, some will have synonyms.
+*  
+ >> INSERT BOOK PERLLL001,Is PERL the Jewel of Programming,S PRESS,PGMING,500
+            Hash RBN is 16, id='PERLLL001'
+ >> INSERT BOOK FUNDBS001,Fundamentals of Database Systems,PEARSON,DB,900
+            Hash RBN is 7, id='FUNDBS001'
+ >> INSERT BOOK PGMLAN001,Progamming Language Concepts,X PRESS,PGMING,700
+            Hash RBN is 4, id='PGMLAN001'
+ >> INSERT BOOK COBOLL001,How Your Grandpa Coded in COBOL,S PRESS,PGMING,800
+            Hash RBN is 19, id='COBOLL001'
+ >> INSERT BOOK TECHDR001,My Technical Dream Job,TECH,PGMING,400
+            Hash RBN is 18, id='TECHDR001'
+ >> PRINTALL BOOK book.dat
+    MaxPrim=19, RecSize=80, MaxOv=25, MaxProbes=5
+     1 PYTHON001 S PRESS     PGMING       200 Learn Python Without Getting Bit Hash=1
+     2 JAVADD001 S PRESS     PGMING       600 Java Isn't an Addiction Hash=2
+     3 EXCELL001 MS PRESS    ACCOUNT      200 Excel at Excell Hash=2
+     4 ARTINT001 S PRESS     PGMING       400 A.I. Practical Algorithms Hash=4
+     5 PGMLAN001 X PRESS     PGMING       700 Progamming Language Concepts Hash=4
+     7 DSTRUC001 S PRESS     PGMING       240 Data Structures in C Hash=7
+     8 JOYPGM001 TECH        PGMING       100 The Joys of Programming Hash=8
+     9 FUNDBS001 PEARSON     DB           900 Fundamentals of Database Systems Hash=7
+    10 LINUXX004 XYZ         OS           700 Learning Linux Hash=10
+    11 PYTADW001 ADWES       PGMING       500 Programming in Python Hash=11
+    16 SQLDBB001 XYZ         DB           300 Making Your DB Queries SQueeL Hash=16
+    17 PERLLL001 S PRESS     PGMING       500 Is PERL the Jewel of Programming Hash=16
+    18 TECHDR001 TECH        PGMING       400 My Technical Dream Job Hash=18
+    19 COBOLL001 S PRESS     PGMING       800 How Your Grandpa Coded in COBOL Hash=19
+*
+* 11. Insert will fail due to max probes
+*
+ >> INSERT BOOK PRANKS001,Software Pranks,TECH,PGMING,300
+            Hash RBN is 1, id='PRANKS001'
+    **** ERROR: Too Many Collisions to write record
+*
+* 12. Read a book that won't be found due to hitting max probes
+*
+ >> READ BOOK PRANKS001
+            Hash RBN is 1, id='PRANKS001'
+    **** ERROR: record not found
+*
+* 13. Insert a book (successfully) past iMaxPrimary
+*
+ >> INSERT BOOK SQLDBA002,Best DBA Book,XYZ,DB,800
+            Hash RBN is 16, id='SQLDBA002'
+ >> PRINTALL BOOK book.dat
+    MaxPrim=19, RecSize=80, MaxOv=25, MaxProbes=5
+     1 PYTHON001 S PRESS     PGMING       200 Learn Python Without Getting Bit Hash=1
+     2 JAVADD001 S PRESS     PGMING       600 Java Isn't an Addiction Hash=2
+     3 EXCELL001 MS PRESS    ACCOUNT      200 Excel at Excell Hash=2
+     4 ARTINT001 S PRESS     PGMING       400 A.I. Practical Algorithms Hash=4
+     5 PGMLAN001 X PRESS     PGMING       700 Progamming Language Concepts Hash=4
+     7 DSTRUC001 S PRESS     PGMING       240 Data Structures in C Hash=7
+     8 JOYPGM001 TECH        PGMING       100 The Joys of Programming Hash=8
+     9 FUNDBS001 PEARSON     DB           900 Fundamentals of Database Systems Hash=7
+    10 LINUXX004 XYZ         OS           700 Learning Linux Hash=10
+    11 PYTADW001 ADWES       PGMING       500 Programming in Python Hash=11
+    16 SQLDBB001 XYZ         DB           300 Making Your DB Queries SQueeL Hash=16
+    17 PERLLL001 S PRESS     PGMING       500 Is PERL the Jewel of Programming Hash=16
+    18 TECHDR001 TECH        PGMING       400 My Technical Dream Job Hash=18
+    19 COBOLL001 S PRESS     PGMING       800 How Your Grandpa Coded in COBOL Hash=19
+    20 SQLDBA002 XYZ         DB           800 Best DBA Book Hash=16
+*
+* 14. Update two existing books 
+* 
+ >> UPDATE BOOK ARTINT001,A.I. Practical Algorithms V2,X PRESS,PGMING,450
+            Hash RBN is 4, id='ARTINT001'
+ >> UPDATE BOOK FUNDBS001,Fund of Database Systems V2,PEARSON,DB,950
+            Hash RBN is 7, id='FUNDBS001'
+ >> READ BOOK ARTINT001
+            Hash RBN is 4, id='ARTINT001'
+     4 ARTINT001 X PRESS     PGMING       450 A.I. Practical Algorithms V2 Hash=4
+ >> READ BOOK FUNDBS001
+            Hash RBN is 7, id='FUNDBS001'
+     9 FUNDBS001 PEARSON     DB           950 Fund of Database Systems V2 Hash=7
+*
+* 15. Update a book that doesn't exist - error
+*
+ >> UPDATE BOOK PGMLAN022,My Favorite Pgm Lang,X PRESS,PGMING,900
+            Hash RBN is 7, id='PGMLAN022'
+    **** ERROR: record not found
+ >> READ BOOK PGMLAN022
+            Hash RBN is 7, id='PGMLAN022'
+    **** ERROR: record not found
+*
+* *** The remaining comments apply to the extra credit. ***
+* 
+* 16. Delete a book that has collisions, 
+*     cannot read it after deleting, but 
+*     we can read its synonym which is still at 9 (hashed to 7)
+*
+ >> DELETE BOOK DSTRUC001
+            Hash RBN is 7, id='DSTRUC001'
+ >> READ BOOK DSTRUC001
+            Hash RBN is 7, id='DSTRUC001'
+    **** ERROR: record not found
+ >> READ BOOK FUNDBS001 
+            Hash RBN is 7, id='FUNDBS001'
+     9 FUNDBS001 PEARSON     DB           950 Fund of Database Systems V2 Hash=7
+ >> PRINTALL BOOK book.dat
+    MaxPrim=19, RecSize=80, MaxOv=25, MaxProbes=5
+     1 PYTHON001 S PRESS     PGMING       200 Learn Python Without Getting Bit Hash=1
+     2 JAVADD001 S PRESS     PGMING       600 Java Isn't an Addiction Hash=2
+     3 EXCELL001 MS PRESS    ACCOUNT      200 Excel at Excell Hash=2
+     4 ARTINT001 X PRESS     PGMING       450 A.I. Practical Algorithms V2 Hash=4
+     5 PGMLAN001 X PRESS     PGMING       700 Progamming Language Concepts Hash=4
+     8 JOYPGM001 TECH        PGMING       100 The Joys of Programming Hash=8
+     9 FUNDBS001 PEARSON     DB           950 Fund of Database Systems V2 Hash=7
+    10 LINUXX004 XYZ         OS           700 Learning Linux Hash=10
+    11 PYTADW001 ADWES       PGMING       500 Programming in Python Hash=11
+    16 SQLDBB001 XYZ         DB           300 Making Your DB Queries SQueeL Hash=16
+    17 PERLLL001 S PRESS     PGMING       500 Is PERL the Jewel of Programming Hash=16
+    18 TECHDR001 TECH        PGMING       400 My Technical Dream Job Hash=18
+    19 COBOLL001 S PRESS     PGMING       800 How Your Grandpa Coded in COBOL Hash=19
+    20 SQLDBA002 XYZ         DB           800 Best DBA Book Hash=16
+* 
+* 17.  Cannot insert an existing book 
+* 
+ >> INSERT BOOK FUNDBS001,Fund of Database Systems V3,PEARSON,DB,999
+            Hash RBN is 7, id='FUNDBS001'
+    **** ERROR: record already exists
+ >> PRINTALL BOOK book.dat
+    MaxPrim=19, RecSize=80, MaxOv=25, MaxProbes=5
+     1 PYTHON001 S PRESS     PGMING       200 Learn Python Without Getting Bit Hash=1
+     2 JAVADD001 S PRESS     PGMING       600 Java Isn't an Addiction Hash=2
+     3 EXCELL001 MS PRESS    ACCOUNT      200 Excel at Excell Hash=2
+     4 ARTINT001 X PRESS     PGMING       450 A.I. Practical Algorithms V2 Hash=4
+     5 PGMLAN001 X PRESS     PGMING       700 Progamming Language Concepts Hash=4
+     8 JOYPGM001 TECH        PGMING       100 The Joys of Programming Hash=8
+     9 FUNDBS001 PEARSON     DB           950 Fund of Database Systems V2 Hash=7
+    10 LINUXX004 XYZ         OS           700 Learning Linux Hash=10
+    11 PYTADW001 ADWES       PGMING       500 Programming in Python Hash=11
+    16 SQLDBB001 XYZ         DB           300 Making Your DB Queries SQueeL Hash=16
+    17 PERLLL001 S PRESS     PGMING       500 Is PERL the Jewel of Programming Hash=16
+    18 TECHDR001 TECH        PGMING       400 My Technical Dream Job Hash=18
+    19 COBOLL001 S PRESS     PGMING       800 How Your Grandpa Coded in COBOL Hash=19
+    20 SQLDBA002 XYZ         DB           800 Best DBA Book Hash=16
+*
+* 18. Delete another book, and then update a book past its empty slot
+*
+ >> DELETE BOOK TECHDR001
+            Hash RBN is 18, id='TECHDR001'
+ >> UPDATE BOOK SQLDBA002,Best DBA Book v2,XYZ,DB,888
+            Hash RBN is 16, id='SQLDBA002'
+ >> PRINTALL BOOK book.dat
+    MaxPrim=19, RecSize=80, MaxOv=25, MaxProbes=5
+     1 PYTHON001 S PRESS     PGMING       200 Learn Python Without Getting Bit Hash=1
+     2 JAVADD001 S PRESS     PGMING       600 Java Isn't an Addiction Hash=2
+     3 EXCELL001 MS PRESS    ACCOUNT      200 Excel at Excell Hash=2
+     4 ARTINT001 X PRESS     PGMING       450 A.I. Practical Algorithms V2 Hash=4
+     5 PGMLAN001 X PRESS     PGMING       700 Progamming Language Concepts Hash=4
+     8 JOYPGM001 TECH        PGMING       100 The Joys of Programming Hash=8
+     9 FUNDBS001 PEARSON     DB           950 Fund of Database Systems V2 Hash=7
+    10 LINUXX004 XYZ         OS           700 Learning Linux Hash=10
+    11 PYTADW001 ADWES       PGMING       500 Programming in Python Hash=11
+    16 SQLDBB001 XYZ         DB           300 Making Your DB Queries SQueeL Hash=16
+    17 PERLLL001 S PRESS     PGMING       500 Is PERL the Jewel of Programming Hash=16
+    19 COBOLL001 S PRESS     PGMING       800 How Your Grandpa Coded in COBOL Hash=19
+    20 SQLDBA002 XYZ         DB           888 Best DBA Book v2 Hash=16
+*
+* 19.  Insert a book which doesn't exist into the empty hole.
+*
+ >> INSERT BOOK COMPILER1,Compilers,PEARSON,PGMING,1100
+            Hash RBN is 7, id='COMPILER1'
+ >> PRINTALL BOOK book.dat
+    MaxPrim=19, RecSize=80, MaxOv=25, MaxProbes=5
+     1 PYTHON001 S PRESS     PGMING       200 Learn Python Without Getting Bit Hash=1
+     2 JAVADD001 S PRESS     PGMING       600 Java Isn't an Addiction Hash=2
+     3 EXCELL001 MS PRESS    ACCOUNT      200 Excel at Excell Hash=2
+     4 ARTINT001 X PRESS     PGMING       450 A.I. Practical Algorithms V2 Hash=4
+     5 PGMLAN001 X PRESS     PGMING       700 Progamming Language Concepts Hash=4
+     7 COMPILER1 PEARSON     PGMING      1100 Compilers Hash=7
+     8 JOYPGM001 TECH        PGMING       100 The Joys of Programming Hash=8
+     9 FUNDBS001 PEARSON     DB           950 Fund of Database Systems V2 Hash=7
+    10 LINUXX004 XYZ         OS           700 Learning Linux Hash=10
+    11 PYTADW001 ADWES       PGMING       500 Programming in Python Hash=11
+    16 SQLDBB001 XYZ         DB           300 Making Your DB Queries SQueeL Hash=16
+    17 PERLLL001 S PRESS     PGMING       500 Is PERL the Jewel of Programming Hash=16
+    19 COBOLL001 S PRESS     PGMING       800 How Your Grandpa Coded in COBOL Hash=19
+    20 SQLDBA002 XYZ         DB           888 Best DBA Book v2 Hash=16
+
